@@ -32,7 +32,9 @@ public class Cargar {
 		pezAzulAdelante = new PImage[31];
 		for (int i = 0; i < pezAzulAdelante.length; i++) {
 			pezAzulAdelante[i] = app.loadImage("../data/PezAzul/PezAzulAdelante/PezAzulAdelante_" + i + ".png");
+			System.out.println(pezAzulAdelante[i]);
 		}
+		System.out.println("Se cargó el Pez AzulAdelante ");
 	}
 	
 	public void cargarPezAzulDer() {
@@ -90,6 +92,89 @@ public class Cargar {
 		for (int i = 0; i < pezRojoAtras.length; i++) {
 			pezRojoAtras[i] = app.loadImage("../data/PezRojo/PezRojoAtras/PezRojoAtras_" + i + ".png");
 		}
+	}
+
+	
+	//-----------GETTERS Y SETTERS----------//
+	
+	public PImage[] getPezAzulQuieto() {
+		return pezAzulQuieto;
+	}
+
+	public void setPezAzulQuieto(PImage[] pezAzulQuieto) {
+		this.pezAzulQuieto = pezAzulQuieto;
+	}
+
+	public PImage[] getPezAzulAdelante() {
+		return pezAzulAdelante;
+	}
+
+	public void setPezAzulAdelante(PImage[] pezAzulAdelante) {
+		this.pezAzulAdelante = pezAzulAdelante;
+	}
+
+	public PImage[] getPezAzulDer() {
+		return pezAzulDer;
+	}
+
+	public void setPezAzulDer(PImage[] pezAzulDer) {
+		this.pezAzulDer = pezAzulDer;
+	}
+
+	public PImage[] getPezAzulIzq() {
+		return pezAzulIzq;
+	}
+
+	public void setPezAzulIzq(PImage[] pezAzulIzq) {
+		this.pezAzulIzq = pezAzulIzq;
+	}
+
+	public PImage[] getPezAzulAtras() {
+		return pezAzulAtras;
+	}
+
+	public void setPezAzulAtras(PImage[] pezAzulAtras) {
+		this.pezAzulAtras = pezAzulAtras;
+	}
+
+	public PImage[] getPezRojoQuieto() {
+		return pezRojoQuieto;
+	}
+
+	public void setPezRojoQuieto(PImage[] pezRojoQuieto) {
+		this.pezRojoQuieto = pezRojoQuieto;
+	}
+
+	public PImage[] getPezRojoAdelante() {
+		return pezRojoAdelante;
+	}
+
+	public void setPezRojoAdelante(PImage[] pezRojoAdelante) {
+		this.pezRojoAdelante = pezRojoAdelante;
+	}
+
+	public PImage[] getPezRojoDer() {
+		return pezRojoDer;
+	}
+
+	public void setPezRojoDer(PImage[] pezRojoDer) {
+		this.pezRojoDer = pezRojoDer;
+	}
+
+	public PImage[] getPezRojoIzq() {
+		return pezRojoIzq;
+	}
+
+	public void setPezRojoIzq(PImage[] pezRojoIzq) {
+		this.pezRojoIzq = pezRojoIzq;
+	}
+
+	public PImage[] getPezRojoAtras() {
+		return pezRojoAtras;
+	}
+
+	public void setPezRojoAtras(PImage[] pezRojoAtras) {
+		this.pezRojoAtras = pezRojoAtras;
 	}
 	
 	//-------------FINAL------------//
