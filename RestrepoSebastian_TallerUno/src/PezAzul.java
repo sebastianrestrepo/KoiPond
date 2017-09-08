@@ -52,7 +52,7 @@ public class PezAzul extends Pez {
 		//Der
 		if (app.key == 'D' || app.key == 'd') {
 			estado = 3;
-			if(app.frameCount%2==0)
+			//if(app.frameCount%2==0)
 			posX+=10;
 		}
 		//Izq
@@ -66,7 +66,7 @@ public class PezAzul extends Pez {
 			estado = 5;
 			//if(app.frameCount%2==0)
 			posY+=10;
-			System.out.println("keyPressed DOWN");
+		//	System.out.println("keyPressed DOWN");
 		}
 	}
 	

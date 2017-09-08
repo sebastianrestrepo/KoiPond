@@ -8,12 +8,14 @@ public abstract class Alimento implements Runnable {
 	protected int posX, posY;
 	protected PImage [] alimento;
 	protected int numFrame;
+	protected int tam;
 	
 	public Alimento(Logica log, PApplet app, int posX, int posY) {
 		this.log = log;
 		this.app = app;
 		this.posX = posX;
 		this.posY = posY;
+		tam = (int) (10+Math.random()*60);
 	}
 
 	@Override
@@ -21,7 +23,7 @@ public abstract class Alimento implements Runnable {
 		// TODO Auto-generated method stub
 		try {
 			Thread.sleep(66);
-			calcular();
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

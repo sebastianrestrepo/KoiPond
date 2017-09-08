@@ -43,23 +43,23 @@ public class PezRojo extends Pez {
 	public void keyPressed() {
 		if (app.keyCode == app.UP) {
 			estado = 2;
-			if(app.frameCount%2==0)
+		//	if(app.frameCount%2==0)
 			posY-=10;
 		}
 		if (app.keyCode == app.RIGHT) {
 			estado = 3;
-			if(app.frameCount%2==0)
+		//	if(app.frameCount%2==0)
 			posX+=10;
 		}
 		
 		if (app.keyCode == app.LEFT) {
 			estado = 4;
-			if(app.frameCount%2==0)
+		//	if(app.frameCount%2==0)
 			posX-=10;
 		}
 		if (app.keyCode == app.DOWN) {
 			estado = 5;
-			if(app.frameCount%2==0)
+		//	if(app.frameCount%2==0)
 			posY+=10;
 			System.out.println("keyPressed DOWN");
 		}
