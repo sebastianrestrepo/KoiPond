@@ -37,7 +37,10 @@ public class Pez implements Runnable {
 	public void calculo() {
 		switch (estado) {
 		case 1:
-
+			numFrame = 17;
+			if (numFrame >= 77) {
+				numFrame = 17;
+			}
 			break;
 		case 2:
 			numFrame++;
@@ -63,31 +66,6 @@ public class Pez implements Runnable {
 				numFrame = 0;
 			}
 			break;
-		}
-	}
-
-	public void keyPressed() {
-		if (app.keyCode == app.UP) {
-			estado = 2;
-			if(app.frameCount%2==0)
-			posY--;
-		}
-		if (app.keyCode == app.RIGHT) {
-			estado = 3;
-			if(app.frameCount%2==0)
-			posX++;
-		}
-		
-		if (app.keyCode == app.LEFT) {
-			estado = 4;
-			if(app.frameCount%2==0)
-			posX--;
-		}
-		if (app.keyCode == app.DOWN) {
-			estado = 5;
-			if(app.frameCount%2==0)
-			posY++;
-			System.out.println("keyPressed DOWN");
 		}
 	}
 	

@@ -25,6 +25,10 @@ public class MainAppKoiPond extends PApplet {
 	public void keyPressed() {
 		log.keyPressed();
 	}
+	
+	public void mouseClicked() {
+		println(mouseX, mouseY);
+	}
 
 	//-------------FINAL------------//
 }

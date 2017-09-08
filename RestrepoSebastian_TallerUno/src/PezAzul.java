@@ -13,18 +13,10 @@ public class PezAzul extends Pez {
 		pezQuieto = log.getCargar().getPezAzulQuieto();
 	}
 	
-	public void igualarImagenes() {
-		pezAdelante = new PImage[31];
-		for (int i = 0; i < pezAdelante.length; i++) {
-			pezAdelante[i] = app.loadImage("../data/PezAzul/PezAzulAdelante/PezAzulAdelante_" + i + ".png");
-			System.out.println(pezAdelante[i]);
-		}
-		System.out.println("Se cargó el Pez AzulAdelante ");
-	}
-	
 	
 	public void pintar() {
 		//System.out.println("pintando pez azul");
+		//posY+=2;
 		switch(estado) {
 		case 1:
 			app.image(pezQuieto[numFrame], posX, posY, pezQuieto[numFrame].width/3 + tam,
@@ -47,6 +39,34 @@ public class PezAzul extends Pez {
 			app.image(pezAtras[numFrame], posX, posY, pezAtras[numFrame].width/3 + tam,
 					pezAtras[numFrame].height/3+ tam);
 			break;
+		}
+	}
+	
+	public void keyPressed() {
+		//Arriba
+		if (app.key == 'W' || app.key == 'w' ) {
+			estado = 2;
+			//if(app.frameCount%2==0)
+			posY-=10;
+		}
+		//Der
+		if (app.key == 'D' || app.key == 'd') {
+			estado = 3;
+			if(app.frameCount%2==0)
+			posX+=10;
+		}
+		//Izq
+		if (app.key == 'A' || app.key == 'a') {
+			estado = 4;
+			//if(app.frameCount%2==0)
+			posX-=10;
+		}
+		//Abajo
+		if (app.keyCode == 'S' || app.key == 's') {
+			estado = 5;
+			//if(app.frameCount%2==0)
+			posY+=10;
+			System.out.println("keyPressed DOWN");
 		}
 	}
 	

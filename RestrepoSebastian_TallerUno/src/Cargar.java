@@ -6,6 +6,7 @@ public class Cargar {
 	private PApplet app;
 	//private PImage img;
 	private PImage [] pezAzulQuieto, pezAzulAdelante, pezAzulDer, pezAzulIzq, pezAzulAtras, pezRojoQuieto, pezRojoAdelante, pezRojoDer, pezRojoIzq, pezRojoAtras;
+	private PImage [] alimentoBueno, alimentoMalo;
 	
 	public Cargar(PApplet app) {
 		this.app = app;
@@ -17,7 +18,28 @@ public class Cargar {
 		cargarPezRojoDer();
 		cargarPezRojoIzq();
 		cargarPezRojoAtras();
+		cargarAlimentoBueno();
+		cargarAlimentoMalo();
 		System.out.println("Imágenes cargadas");
+	}
+	
+	//-----------Cargar Alimento------------//
+	public void cargarAlimentoBueno() {
+		
+		alimentoBueno = new PImage[48];
+		for (int i = 0; i < alimentoBueno.length; i++) {
+			alimentoBueno[i] = app.loadImage("../data/Alimento/AlimentoBueno/AlimentoBueno_" + i + ".png");
+		}
+	
+	}
+	
+	public void cargarAlimentoMalo() {
+		
+		alimentoMalo = new PImage[49];
+		for (int i = 0; i < alimentoMalo.length; i++) {
+			alimentoMalo[i] = app.loadImage("../data/Alimento/AlimentoMalo/AlimentoMalo_" + i + ".png");
+		}
+		
 	}
 	
 	//-----------Cargar Pez Azul-----------//
@@ -176,6 +198,23 @@ public class Cargar {
 	public void setPezRojoAtras(PImage[] pezRojoAtras) {
 		this.pezRojoAtras = pezRojoAtras;
 	}
+
+	public PImage[] getAlimentoBueno() {
+		return alimentoBueno;
+	}
+
+	public void setAlimentoBueno(PImage[] alimentoBueno) {
+		this.alimentoBueno = alimentoBueno;
+	}
+
+	public PImage[] getAlimentoMalo() {
+		return alimentoMalo;
+	}
+
+	public void setAlimentoMalo(PImage[] alimentoMalo) {
+		this.alimentoMalo = alimentoMalo;
+	}
+	
 	
 	//-------------FINAL------------//
 }
