@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class Logica {
+public class Logica implements Observer {
 
 	private PApplet app;
 	private Cargar cargar;
@@ -14,13 +16,24 @@ public class Logica {
 	private PezAzul pezAzul;
 	private PezRojo pezRojo;
 	private ArrayList<Alimento> alimentos;
-	private ArrayList <Thread> capsulas;
+	private ArrayList<Thread> capsulas;
+	private ComunicacionServidor cs;
+	private EscanerRed er;
 
 	public Logica(PApplet app) {
 		this.app = app;
 		cargar = new Cargar(app);
+		//er = new EscanerRed();
 		cargarPantallaInicial();
 		cargarImagenes();
+		iniciarVariables();
+	}
+
+	public void iniciarVariables() {
+		cs = new ComunicacionServidor(this);
+		Thread t = new Thread(cs);
+		t.start();
+		//
 		pezAzul = new PezAzul(this, app, 100, 100);
 		Thread hiloPezAzul = new Thread(pezAzul);
 		hiloPezAzul.start();
@@ -33,18 +46,14 @@ public class Logica {
 		capsulas = new ArrayList<Thread>();
 		alimentos.add(new AlimentoBueno(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
 		alimentos.add(new AlimentoMalo(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
-		
+
 		for (int i = 0; i < alimentos.size(); i++) {
 			capsulas.add(new Thread(alimentos.get(i)));
 			if (alimentos.get(i) != null) {
 				capsulas.get(i).start();
 			}
 		}
-		
-	}
-
-	public void iniciarVariables() {
-
+		//
 	}
 
 	public void cargarPantallaInicial() {
@@ -69,14 +78,14 @@ public class Logica {
 			app.background(0);
 			break;
 		case 2:
-			app.image(fondo, app.width/2, app.height/2);
+			app.image(fondo, app.width / 2, app.height / 2);
 			for (int i = 0; i < alimentos.size(); i++) {
 				alimentos.get(i).pintar();
 			}
 			pezAzul.pintar();
 			pezRojo.pintar();
-	
-			app.image(agua, app.width/2, app.height/2);
+			//pezRojo.mover();
+			app.image(agua, app.width / 2, app.height / 2);
 			break;
 		}
 	}
@@ -89,6 +98,36 @@ public class Logica {
 				numActualPantallaIni = 13;
 			}
 		}
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+		String mensaje = (String) arg;
+		System.out.println("[notificación: " + mensaje + "]");
+		if(mensaje.equals("arriba")) {
+			pezRojo.moverArriba();
+		}
+		
+		String mensajeDos = (String) arg;
+		System.out.println("[notificación: " + mensajeDos + "]");
+		if(mensajeDos.equals("derecha")) {
+			pezRojo.moverDerecha();
+		}
+		
+		String mensajeTres = (String) arg;
+		System.out.println("[notificación: " + mensajeTres + "]");
+		if(mensajeTres.equals("izquierda")) {
+			pezRojo.moverIzquierda();
+		}
+		
+		String mensajeCuatro = (String) arg;
+		System.out.println("[notificación: " + mensajeCuatro + "]");
+		if(mensajeCuatro.equals("abajo")) {
+			pezRojo.moverAbajo();
+		}
+		
 	}
 
 	public void keyPressed() {
@@ -106,8 +145,8 @@ public class Logica {
 		case 2:
 			// iniciarVariables();
 			pezAzul.keyPressed();
-			pezRojo.keyPressed();
-			//System.out.println("pantalla: " + pantallas);
+			// pezRojo.keyPressed();
+			// System.out.println("pantalla: " + pantallas);
 			//
 			break;
 		}
@@ -120,6 +159,22 @@ public class Logica {
 
 	public void setCargar(Cargar cargar) {
 		this.cargar = cargar;
+	}
+
+	public ComunicacionServidor getCs() {
+		return cs;
+	}
+
+	public void setCs(ComunicacionServidor cs) {
+		this.cs = cs;
+	}
+
+	public PezRojo getPezRojo() {
+		return pezRojo;
+	}
+
+	public void setPezRojo(PezRojo pezRojo) {
+		this.pezRojo = pezRojo;
 	}
 
 	// -------------FINAL------------//

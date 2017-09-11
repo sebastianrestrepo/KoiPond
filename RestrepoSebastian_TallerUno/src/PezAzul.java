@@ -11,6 +11,7 @@ public class PezAzul extends Pez {
 		pezDer = log.getCargar().getPezAzulDer();
 		pezIzq = log.getCargar().getPezAzulIzq();
 		pezQuieto = log.getCargar().getPezAzulQuieto();
+		estado = 5;
 	}
 	
 	
@@ -25,7 +26,7 @@ public class PezAzul extends Pez {
 		case 2:
 			app.image(pezAdelante[numFrame], posX, posY, pezAdelante[numFrame].width/3 + tam,
 					pezAdelante[numFrame].height/3+ tam);
-			System.out.println("pintando caso 2 pez azul");
+		//	System.out.println("pintando caso 2 pez azul");
 			break;
 		case 3:
 			app.image(pezDer[numFrame], posX, posY, pezDer[numFrame].width/3 + tam,

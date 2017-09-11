@@ -10,6 +10,7 @@ public class Pez implements Runnable {
 	protected Logica log;
 	protected int estado, tam, numFrame;
 	protected boolean vivo;
+	protected boolean arriba, abajo, derecha, izquierda;
 
 	public Pez(Logica log, PApplet app, int posX, int posY) {
 		this.app = app;
@@ -17,8 +18,11 @@ public class Pez implements Runnable {
 		this.posY = posY;
 		tam = 100;
 		vivo = true;
-		estado = 5;
 		numFrame = 1;
+		arriba = false;
+		abajo = false;
+		derecha = false;
+		izquierda = false;
 	}
 
 	@Override
