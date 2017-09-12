@@ -6,6 +6,7 @@ public class PezRojo extends Pez {
 
 	public PezRojo(Logica log, PApplet app, int posX, int posY) {
 		super(log, app, posX, posY);
+		//242
 		// igualarImagenes();
 		pezAdelante = log.getCargar().getPezRojoAdelante();
 		pezAtras = log.getCargar().getPezRojoAtras();
@@ -15,6 +16,7 @@ public class PezRojo extends Pez {
 		estado = 2;
 	}
 
+	///
 	public void pintar() {
 		// System.out.println("pintando pez azul");
 		switch (estado) {
