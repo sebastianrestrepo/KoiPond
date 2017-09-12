@@ -48,7 +48,7 @@ public class PezRojo extends Pez {
 			if (posY > 15) {
 				estado = 2;
 				posY -= 10;
-				arriba = false;
+			//	arriba = false;
 			}
 		
 		

@@ -110,6 +110,7 @@ public class Logica implements Observer {
 			pezRojo.moverArriba();
 		}
 		
+		/*
 		String mensajeDos = (String) arg;
 		System.out.println("[notificación: " + mensajeDos + "]");
 		if(mensajeDos.equals("derecha")) {
@@ -127,6 +128,7 @@ public class Logica implements Observer {
 		if(mensajeCuatro.equals("abajo")) {
 			pezRojo.moverAbajo();
 		}
+		*/
 		
 	}
 

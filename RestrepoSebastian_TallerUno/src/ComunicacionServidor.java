@@ -56,7 +56,7 @@ public class ComunicacionServidor extends Observable implements Runnable {
 			atraparMensaje = entrada.readObject();
 			String mensaje = (String) atraparMensaje;
 			System.out.println("Llegó un mensaje: " + mensaje);
-			if(mensaje.equals("arriba"));
+			///if(mensaje.equals("arriba"));
 			setChanged();
 			notifyObservers(mensaje);
 			clearChanged();
