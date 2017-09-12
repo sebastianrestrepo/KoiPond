@@ -18,7 +18,7 @@ public class ComunicacionCliente extends Observable implements Runnable {
     private ObjectOutputStream salida;
     private boolean conectado;
 
-
+//Hola
     public ComunicacionCliente(){
         conectado = false;
 
