@@ -27,6 +27,7 @@ public class Logica implements Observer {
 		cargarPantallaInicial();
 		cargarImagenes();
 		iniciarVariables();
+		cs.addObserver(this);
 	}
 
 	public void iniciarVariables() {

@@ -30,13 +30,12 @@ public class ComunicacionCliente extends Observable implements Runnable {
         if(!conectado) {
 
             try {
+
                 s = new Socket(InetAddress.getByName("172.30.159.213"), 8080);
                 salida = new ObjectOutputStream(s.getOutputStream());
                 entrada = new ObjectInputStream(s.getInputStream());
                 conectado = true;
-                setChanged();
-                notifyObservers("conectado");
-                clearChanged();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
