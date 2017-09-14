@@ -23,17 +23,20 @@ public class Logica implements Observer {
 	public Logica(PApplet app) {
 		this.app = app;
 		cargar = new Cargar(app);
-		//er = new EscanerRed();
 		cargarPantallaInicial();
 		cargarImagenes();
 		iniciarVariables();
-		cs.addObserver(this);
 	}
 
 	public void iniciarVariables() {
 		cs = new ComunicacionServidor(this);
-		Thread t = new Thread(cs);
-		t.start();
+		cs.addObserver(this);
+		/*
+		 * Thread t = new Thread(cs); t.start();
+		 */
+		//
+		er = new EscanerRed();
+		er.start();
 		//
 		pezAzul = new PezAzul(this, app, 100, 100);
 		Thread hiloPezAzul = new Thread(pezAzul);
@@ -85,7 +88,7 @@ public class Logica implements Observer {
 			}
 			pezAzul.pintar();
 			pezRojo.pintar();
-			//pezRojo.mover();
+			// pezRojo.mover();
 			app.image(agua, app.width / 2, app.height / 2);
 			break;
 		}
@@ -100,37 +103,33 @@ public class Logica implements Observer {
 			}
 		}
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
-		String mensaje = (String) arg;
-		System.out.println("[notificación: " + mensaje + "]");
-		if(mensaje.equals("arriba")) {
-			pezRojo.moverArriba();
+
+		if (o instanceof ComunicacionServidor) {
+			String mensaje = (String) arg;
+			System.out.println("[notificación: " + mensaje + "]");
+			if (mensaje.equals("arriba")) {
+				pezRojo.moverArriba();
+			}
 		}
-		
+
 		/*
-		String mensajeDos = (String) arg;
-		System.out.println("[notificación: " + mensajeDos + "]");
-		if(mensajeDos.equals("derecha")) {
-			pezRojo.moverDerecha();
-		}
-		
-		String mensajeTres = (String) arg;
-		System.out.println("[notificación: " + mensajeTres + "]");
-		if(mensajeTres.equals("izquierda")) {
-			pezRojo.moverIzquierda();
-		}
-		
-		String mensajeCuatro = (String) arg;
-		System.out.println("[notificación: " + mensajeCuatro + "]");
-		if(mensajeCuatro.equals("abajo")) {
-			pezRojo.moverAbajo();
-		}
-		*/
-		
+		 * String mensajeDos = (String) arg; System.out.println("[notificación: " +
+		 * mensajeDos + "]"); if(mensajeDos.equals("derecha")) { pezRojo.moverDerecha();
+		 * }
+		 * 
+		 * String mensajeTres = (String) arg; System.out.println("[notificación: " +
+		 * mensajeTres + "]"); if(mensajeTres.equals("izquierda")) {
+		 * pezRojo.moverIzquierda(); }
+		 * 
+		 * String mensajeCuatro = (String) arg; System.out.println("[notificación: " +
+		 * mensajeCuatro + "]"); if(mensajeCuatro.equals("abajo")) {
+		 * pezRojo.moverAbajo(); }
+		 */
+
 	}
 
 	public void keyPressed() {

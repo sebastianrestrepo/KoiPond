@@ -17,7 +17,25 @@ public class ComunicacionServidor extends Observable implements Runnable {
 		conectado = false;
 		try {
 			System.out.println("Iniciando Servidor");
-			ss = new ServerSocket(8080);
+			ss = new ServerSocket(9090);
+			
+			System.out.println("En espera...");
+			s = ss.accept();
+			
+			System.out.println("[Conectado Socket...]");
+			System.out.println("[Enlazando flujos...");
+		
+			salida = new ObjectOutputStream(s.getOutputStream());
+			System.out.println("LOL");
+			entrada = new ObjectInputStream(s.getInputStream());
+			
+			System.out.println("...Enlace completo :)]");
+			
+			conectado = true;
+			
+			Thread t = new Thread(this);
+			t.start();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,22 +47,25 @@ public class ComunicacionServidor extends Observable implements Runnable {
 		try {
 			Thread.sleep(200);
 			while(true) {
-				if(s == null) {
-					System.out.println("En espera...");
-					s = ss.accept();
-					System.out.println("[Conectado Socket...]");
-					System.out.println("[Enlazando flujos...");
-					entrada = new ObjectInputStream(s.getInputStream());
-					salida = new ObjectOutputStream(s.getOutputStream());
-					System.out.println("...Enlace completo :)]");
-					conectado = true;
+				
+					
 					recibirMensaje();
-				}
+				
+				
+//				if(s == null) {
+//					System.out.println("En espera...");
+//					s = ss.accept();
+//					System.out.println("[Conectado Socket...]");
+//					System.out.println("[Enlazando flujos...");
+//					entrada = new ObjectInputStream(s.getInputStream());
+//					System.out.println("LOL");
+//					salida = new ObjectOutputStream(s.getOutputStream());
+//					System.out.println("...Enlace completo :)]");
+//					conectado = true;
+//					recibirMensaje();
+//				}
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
