@@ -21,7 +21,7 @@ public class EscanerRed extends Thread {
 				InetAddress actual = InetAddress.getByName(base);
 				if(actual.isReachable(500)) {
 					System.out.println("nueva ip disponible: " + base);
-					
+					//AQUÍ DEBO DECIRLE QUE PINTE EL ALIMENTO
 				}
 				
 				if(conteo < 255)
