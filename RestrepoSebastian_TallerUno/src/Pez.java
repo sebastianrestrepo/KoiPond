@@ -37,6 +37,7 @@ public class Pez implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void calculo() {
 		switch (estado) {
@@ -72,6 +73,42 @@ public class Pez implements Runnable {
 			break;
 		}
 	}
+
+	
+	//-------------GETTERS Y SETTERS----------//
+	public boolean isArriba() {
+		return arriba;
+	}
+
+	public void setArriba(boolean arriba) {
+		this.arriba = arriba;
+	}
+
+	public boolean isAbajo() {
+		return abajo;
+	}
+
+	public void setAbajo(boolean abajo) {
+		this.abajo = abajo;
+	}
+
+	public boolean isDerecha() {
+		return derecha;
+	}
+
+	public void setDerecha(boolean derecha) {
+		this.derecha = derecha;
+	}
+
+	public boolean isIzquierda() {
+		return izquierda;
+	}
+
+	public void setIzquierda(boolean izquierda) {
+		this.izquierda = izquierda;
+	}
+	
+	
 	
 //-----------FINAL DE LA CLASE PEZ--------//
 }

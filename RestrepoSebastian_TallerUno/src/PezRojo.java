@@ -3,10 +3,9 @@ import processing.core.PImage;
 
 public class PezRojo extends Pez {
 
-
 	public PezRojo(Logica log, PApplet app, int posX, int posY) {
 		super(log, app, posX, posY);
-		//242
+		// 242
 		// igualarImagenes();
 		pezAdelante = log.getCargar().getPezRojoAdelante();
 		pezAtras = log.getCargar().getPezRojoAtras();
@@ -44,51 +43,45 @@ public class PezRojo extends Pez {
 		}
 	}
 
-	public void moverArriba() {
+	public void mover() {
 		// Mover arriba
-		
+		if (arriba) {
 			if (posY > 15) {
 				estado = 2;
-				posY -= 10;
-			//	arriba = false;
+				posY -= 2;
+				// arriba = false;
 			}
-		
-		
-	}
-	
-	public void moverDerecha() {
+		}
+
 		// Mover a la derecha
-	
+		if (derecha) {
 			if (posX < app.width - 15) {
 				estado = 3;
 				posX += 2;
 			}
-	
-	}
-	
-	public void moverIzquierda() {
+		}
+
 		// Mover a la izquierda
-	
+		if (izquierda) {
 			if (posX > 15) {
 				estado = 4;
 				posX -= 2;
 			}
-	
-	}
-	
-	public void moverAbajo() {
+		}
+
 		// Mover abajo
-	
+		if (abajo) {
 			if (posY < app.height - 15) {
 				estado = 5;
 				posY += 2;
 			}
+		}
 
 	}
-		//------------FINAL DEL MÉTODO MOVER-------------//
 
+	// ------------FINAL DEL MÉTODO MOVER-------------//
 
-	//---------------GETTERS Y SETTERS----------------//
+	// ---------------GETTERS Y SETTERS----------------//
 	public boolean isArriba() {
 		return arriba;
 	}
@@ -120,8 +113,6 @@ public class PezRojo extends Pez {
 	public void setIzquierda(boolean izquierda) {
 		this.izquierda = izquierda;
 	}
-	
-	
 
 	// ----------FINAL---------//
 }

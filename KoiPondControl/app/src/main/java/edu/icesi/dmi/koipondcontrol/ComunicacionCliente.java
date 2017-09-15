@@ -33,7 +33,7 @@ conectado = false;
         if(s == null) {
 
             try {
-                s = new Socket(InetAddress.getByName("172.30.186.181"), 9090);
+                s = new Socket(InetAddress.getByName("192.168.0.6"), 9090);
                 System.out.println("Conectado");
                 salida = new ObjectOutputStream(s.getOutputStream());
                 entrada = new ObjectInputStream(s.getInputStream());

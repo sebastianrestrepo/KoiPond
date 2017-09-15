@@ -29,35 +29,39 @@ public class Logica implements Observer {
 	}
 
 	public void iniciarVariables() {
+		//Se inicia el Servidor
 		cs = new ComunicacionServidor(this);
 		cs.addObserver(this);
-		/*
-		 * Thread t = new Thread(cs); t.start();
-		 */
-		//
-		er = new EscanerRed();
-		er.start();
-		//
+		
+		Thread t = new Thread(cs); 
+		t.start();
+
+		//Se inicia el Pez Azul
 		pezAzul = new PezAzul(this, app, 100, 100);
-		Thread hiloPezAzul = new Thread(pezAzul);
-		hiloPezAzul.start();
-		//
+		new Thread(pezAzul).start();
+
+		//Se inicia el Pez Rojo
 		pezRojo = new PezRojo(this, app, 800, 600);
-		Thread hiloPezRojo = new Thread(pezRojo);
-		hiloPezRojo.start();
-		//
+		new Thread(pezRojo).start();
+		
+		//Se crean los alimentos
 		alimentos = new ArrayList<Alimento>();
 		capsulas = new ArrayList<Thread>();
+		/*
 		alimentos.add(new AlimentoBueno(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
 		alimentos.add(new AlimentoMalo(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
-
+*/
 		for (int i = 0; i < alimentos.size(); i++) {
 			capsulas.add(new Thread(alimentos.get(i)));
 			if (alimentos.get(i) != null) {
 				capsulas.get(i).start();
 			}
 		}
-		//
+		
+		//Se inicia el escaner
+		er = new EscanerRed(this);
+		new Thread(er).start();
+		
 	}
 
 	public void cargarPantallaInicial() {
@@ -88,7 +92,7 @@ public class Logica implements Observer {
 			}
 			pezAzul.pintar();
 			pezRojo.pintar();
-			// pezRojo.mover();
+			pezRojo.mover();
 			app.image(agua, app.width / 2, app.height / 2);
 			break;
 		}
@@ -104,31 +108,50 @@ public class Logica implements Observer {
 		}
 	}
 
+	//--------------------------UPDATE--------------------------//
 	@Override
-	public void update(Observable o, Object arg) {
+	public synchronized void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 
 		if (o instanceof ComunicacionServidor) {
 			String mensaje = (String) arg;
 			System.out.println("[notificación: " + mensaje + "]");
 			if (mensaje.equals("arriba")) {
-				pezRojo.moverArriba();
+				pezRojo.setArriba(true);
+			}
+			if (mensaje.equals("abajo")) {
+				pezRojo.setAbajo(true);
+			}
+			if (mensaje.equals("izquierda")) {
+				pezRojo.setIzquierda(true);
+			}
+			if (mensaje.equals("derecha")) {
+				pezRojo.setDerecha(true);
+			}
+			if (mensaje.equals("quieto")) {
+				pezRojo.setArriba(false);
+				pezRojo.setAbajo(false);
+				pezRojo.setIzquierda(false);
+				pezRojo.setDerecha(false);
 			}
 		}
 
-		/*
-		 * String mensajeDos = (String) arg; System.out.println("[notificación: " +
-		 * mensajeDos + "]"); if(mensajeDos.equals("derecha")) { pezRojo.moverDerecha();
-		 * }
-		 * 
-		 * String mensajeTres = (String) arg; System.out.println("[notificación: " +
-		 * mensajeTres + "]"); if(mensajeTres.equals("izquierda")) {
-		 * pezRojo.moverIzquierda(); }
-		 * 
-		 * String mensajeCuatro = (String) arg; System.out.println("[notificación: " +
-		 * mensajeCuatro + "]"); if(mensajeCuatro.equals("abajo")) {
-		 * pezRojo.moverAbajo(); }
-		 */
+		
+		if(o instanceof EscanerRed && arg instanceof String) {
+			String ip = (String) arg;
+			if(ip.contains(".")) {
+				int random = (int) app.random(2);
+				switch(random) {
+				case 0:
+					alimentos.add(new AlimentoBueno(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
+					break;
+				case 1:
+					alimentos.add(new AlimentoMalo(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
+					break;
+				
+				}
+			}
+		}
 
 	}
 
