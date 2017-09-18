@@ -1,26 +1,50 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class Cargar {
+public class Cargar extends Thread {
 
 	private PApplet app;
 	//private PImage img;
-	private PImage [] pezAzulQuieto, pezAzulAdelante, pezAzulDer, pezAzulIzq, pezAzulAtras, pezRojoQuieto, pezRojoAdelante, pezRojoDer, pezRojoIzq, pezRojoAtras;
+	private PImage [] pantallaInicial, pezAzulQuieto, pezAzulAdelante, pezAzulDer, pezAzulIzq, pezAzulAtras, pezRojoQuieto, pezRojoAdelante, pezRojoDer, pezRojoIzq, pezRojoAtras;
 	private PImage [] alimentoBueno, alimentoMalo;
+	private boolean cargaFinalizada;
 	
 	public Cargar(PApplet app) {
+		cargaFinalizada = false;
 		this.app = app;
-		cargarPezAzulAdelante();
-		cargarPezAzulDer();
-		cargarPezAzulIzq();
-		cargarPezAzulAtras();
-		cargarPezRojoAdelante();
-		cargarPezRojoDer();
-		cargarPezRojoIzq();
-		cargarPezRojoAtras();
-		cargarAlimentoBueno();
-		cargarAlimentoMalo();
-		System.out.println("Imágenes cargadas");
+
+	}
+	
+	public void run() {
+		try {
+			System.out.println("Carga de imágenes iniciada");
+			sleep(15);
+			cargarPantallaInicial();
+			cargarPezAzulAdelante();
+			cargarPezAzulDer();
+			cargarPezAzulIzq();
+			cargarPezAzulAtras();
+			cargarPezRojoAdelante();
+			cargarPezRojoDer();
+			cargarPezRojoIzq();
+			cargarPezRojoAtras();
+			cargarAlimentoBueno();
+			cargarAlimentoMalo();
+			cargaFinalizada = true;
+			System.out.println("Imágenes cargadas: " + cargaFinalizada);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	//-----------Cargar Pantalla Inicial-----------//
+	public void cargarPantallaInicial() {
+		pantallaInicial = new PImage[68];
+		for (int i = 19; i < pantallaInicial.length; i++) {
+			pantallaInicial[i] = app.loadImage("../data/PantallaInicial/PantallaInicial_" + i + ".png");
+		}
 	}
 	
 	//-----------Cargar Alimento------------//
@@ -54,7 +78,7 @@ public class Cargar {
 		pezAzulAdelante = new PImage[31];
 		for (int i = 0; i < pezAzulAdelante.length; i++) {
 			pezAzulAdelante[i] = app.loadImage("../data/PezAzul/PezAzulAdelante/PezAzulAdelante_" + i + ".png");
-			System.out.println(pezAzulAdelante[i]);
+			//System.out.println(pezAzulAdelante[i]);
 		}
 		System.out.println("Se cargó el Pez AzulAdelante ");
 	}
@@ -213,6 +237,22 @@ public class Cargar {
 
 	public void setAlimentoMalo(PImage[] alimentoMalo) {
 		this.alimentoMalo = alimentoMalo;
+	}
+
+	public PImage[] getPantallaInicial() {
+		return pantallaInicial;
+	}
+
+	public void setPantallaInicial(PImage[] pantallaInicial) {
+		this.pantallaInicial = pantallaInicial;
+	}
+
+	public boolean isCargaFinalizada() {
+		return cargaFinalizada;
+	}
+
+	public void setCargaFinalizada(boolean cargaFinalizada) {
+		this.cargaFinalizada = cargaFinalizada;
 	}
 	
 	

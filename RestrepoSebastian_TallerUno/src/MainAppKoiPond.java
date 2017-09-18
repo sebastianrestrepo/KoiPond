@@ -15,6 +15,7 @@ public class MainAppKoiPond extends PApplet {
 	
 	public void setup() {
 		log = new Logica(this);
+		log.cargarPantallaInicial();
 		imageMode(CENTER);
 	}
 	
