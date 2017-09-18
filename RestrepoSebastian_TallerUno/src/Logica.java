@@ -36,7 +36,7 @@ public class Logica implements Observer {
 		numActualPantallaIni = 20;
 
 		// Se inicia el Servidor
-		servidor = new ControlServidor();
+		servidor = new ControlServidor(this);
 		new Thread(servidor).start();
 		
 		inconsolata = app.createFont("Inconsolata.oft", 17);
@@ -152,7 +152,7 @@ public class Logica implements Observer {
 	@Override
 	public synchronized void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-
+/*
 		if (o instanceof ControlCliente) {
 			String mensaje = (String) arg;
 			System.out.println("[notificación: " + mensaje + "]");
@@ -175,6 +175,7 @@ public class Logica implements Observer {
 				pezRojo.setDerecha(false);
 			}
 		}
+		*/
 
 		if (o instanceof EscanerRed && arg instanceof String) {
 			String ip = (String) arg;
@@ -209,7 +210,7 @@ public class Logica implements Observer {
 			break;
 		case 3:
 			// iniciarVariables();
-			pezAzul.keyPressed();
+			//pezAzul.keyPressed();
 			// pezRojo.keyPressed();
 			// System.out.println("pantalla: " + pantallas);
 			//
@@ -242,5 +243,15 @@ public class Logica implements Observer {
 		this.pezRojo = pezRojo;
 	}
 
+	public PezAzul getPezAzul() {
+		return pezAzul;
+	}
+
+	public void setPezAzul(PezAzul pezAzul) {
+		this.pezAzul = pezAzul;
+	}
+
+	
+	
 	// -------------FINAL------------//
 }

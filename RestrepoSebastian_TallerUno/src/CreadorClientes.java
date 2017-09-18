@@ -22,6 +22,7 @@ public class CreadorClientes extends Observable implements Runnable {
 	public void run() {
 		while(true) {
 			try {
+				System.out.println("Esperando nuevo cliente...");
 				Socket nuevoSocket = ss.accept();
 				setChanged();
 				notifyObservers(nuevoSocket);

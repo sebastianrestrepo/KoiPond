@@ -43,32 +43,40 @@ public class PezAzul extends Pez {
 		}
 	}
 	
-	public void keyPressed() {
-		//Arriba
-		if (app.key == 'W' || app.key == 'w' ) {
-			estado = 2;
-			//if(app.frameCount%2==0)
-			posY-=10;
+	public void mover() {
+		// Mover arriba
+		if (arriba) {
+			if (posY > 15) {
+				estado = 2;
+				posY -= 2;
+				// arriba = false;
+			}
 		}
-		//Der
-		if (app.key == 'D' || app.key == 'd') {
-			estado = 3;
-			//if(app.frameCount%2==0)
-			posX+=10;
+
+		// Mover a la derecha
+		if (derecha) {
+			if (posX < app.width - 15) {
+				estado = 3;
+				posX += 2;
+			}
 		}
-		//Izq
-		if (app.key == 'A' || app.key == 'a') {
-			estado = 4;
-			//if(app.frameCount%2==0)
-			posX-=10;
+
+		// Mover a la izquierda
+		if (izquierda) {
+			if (posX > 15) {
+				estado = 4;
+				posX -= 2;
+			}
 		}
-		//Abajo
-		if (app.keyCode == 'S' || app.key == 's') {
-			estado = 5;
-			//if(app.frameCount%2==0)
-			posY+=10;
-		//	System.out.println("keyPressed DOWN");
+
+		// Mover abajo
+		if (abajo) {
+			if (posY < app.height - 15) {
+				estado = 5;
+				posY += 2;
+			}
 		}
+
 	}
 	
 	//----------FINAL DE LA CLASE PEZ AZUL-----------//
