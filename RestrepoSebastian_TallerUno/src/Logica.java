@@ -75,7 +75,8 @@ public class Logica implements Observer {
 		}
 
 		// Se inicia el escaner
-		er = new EscanerRed(this);
+		er = new EscanerRed();
+		er.addObserver(this);
 		new Thread(er).start();
 	}
 

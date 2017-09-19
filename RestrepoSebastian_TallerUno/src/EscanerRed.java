@@ -8,15 +8,14 @@ import processing.core.PApplet;
 
 public class EscanerRed extends Observable implements Runnable {
 
-	private Observer padre;
 	
-	public EscanerRed(Observer padre) {
-		this.padre = padre;
+	public EscanerRed() {
+
 	}
 	
 	public void run() {
 		while(true) {
-			/*
+			
 			try {
 				
 				System.out.println("Buscador Iniciado");
@@ -31,14 +30,25 @@ public class EscanerRed extends Observable implements Runnable {
 				for (int i = 0; i < 255; i++) {
 					String buscado = base + "." + i;
 					System.out.println("IP ES: " + buscado);
+					
 					if(InetAddress.getByName(buscado).isReachable(espera)) {
-						padre.update(this, buscado);
+						//padre.update(this, buscado);
+						
+						setChanged();
+						notifyObservers(buscado);
+						clearChanged();
+						
 						System.out.println("Nueva IP: " + buscado);
 					}
+					
 				}
 			Thread.sleep(16);
 			
 			} catch (IOException e) {
+				setChanged();
+				notifyObservers("error");
+				clearChanged();
+				System.out.println("IMPRIMIENDO");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				//System.out.println("Error: " +  e);
@@ -46,7 +56,7 @@ public class EscanerRed extends Observable implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			*/
+			
 		}
 	}
 	

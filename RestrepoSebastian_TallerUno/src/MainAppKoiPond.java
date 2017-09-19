@@ -7,6 +7,7 @@ public class MainAppKoiPond extends PApplet {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PApplet.main("MainAppKoiPond");
+		System.setProperty("java.net.preferIPv4Stack", "true");
 	}
 	
 	public void settings() {

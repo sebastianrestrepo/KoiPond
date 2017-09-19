@@ -46,24 +46,27 @@ public class ControlServidor implements Observer, Runnable {
 		}
 
 		if (o instanceof ControlCliente) {
+			
+			ControlCliente controlador = (ControlCliente) o;
 			if (arg instanceof Mensaje) {
 				Mensaje m = (Mensaje) arg;
 				System.out.println("Nuevo mensaje con indice: " + m.getIndice());
 
-				for (int i = 0; i < clientes.size(); i++) {
-					if (m.getIndice() != i) {
-						m.setIndice(i);
-						clientes.get(i).enviarMensaje(m);
-						System.out.println("Se reenvia a: " + i + " este indice: " + m.getIndice() + " y este mensaje: "
+				//for (int i = 0; i < clientes.size(); i++) {
+					if (m.getIndice() != clientes.size()) {
+						m.setIndice(clientes.size());
+						System.out.println("Entra: " +  (m.getIndice() != clientes.size()));
+						controlador.enviarMensaje(m);
+						System.out.println("Se reenvia a: " + clientes.size() + " este indice: " + m.getIndice() + " y este mensaje: "
 								+ m.getMensaje());
 					} else {
-						System.out.println("No se reenvia a: " + i);
+						//System.out.println("No se reenvia a: " + i);
 					}
-				}
+				//}
 				//
 
 				System.out.println("[notificación: " + m.getMensaje() + " del cliente número: " + m.getIndice() + "]");
-				if (m.getIndice() == 0) {
+				if (m.getIndice() == 1) {
 					if (m.getMensaje().equals("arriba")) {
 						log.getPezRojo().setArriba(true);
 					}
@@ -84,24 +87,24 @@ public class ControlServidor implements Observer, Runnable {
 					}
 				}
 				
-				if (m.getIndice() == 1) {
+				if (m.getIndice() == 2) {
 					if (m.getMensaje().equals("arriba")) {
 						log.getPezAzul().setArriba(true);
 					}
 					if (m.getMensaje().equals("abajo")) {
-						log.getPezRojo().setAbajo(true);
+						log.getPezAzul().setAbajo(true);
 					}
 					if (m.getMensaje().equals("izquierda")) {
-						log.getPezRojo().setIzquierda(true);
+						log.getPezAzul().setIzquierda(true);
 					}
 					if (m.getMensaje().equals("derecha")) {
-						log.getPezRojo().setDerecha(true);
+						log.getPezAzul().setDerecha(true);
 					}
 					if (m.getMensaje().equals("quieto")) {
-						log.getPezRojo().setArriba(false);
-						log.getPezRojo().setAbajo(false);
-						log.getPezRojo().setIzquierda(false);
-						log.getPezRojo().setDerecha(false);
+						log.getPezAzul().setArriba(false);
+						log.getPezAzul().setAbajo(false);
+						log.getPezAzul().setIzquierda(false);
+						log.getPezAzul().setDerecha(false);
 					}
 				}
 			}
