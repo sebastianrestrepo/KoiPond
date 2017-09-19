@@ -3,6 +3,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ddf.minim.AudioPlayer;
+import ddf.minim.AudioSample;
 import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -13,12 +14,14 @@ public class Logica implements Observer {
 	private PApplet app;
 	private Cargar cargar;
 	private int pantallas;
+	private int segundos, minutos;
 	private PImage[] pantallaCarga, pantallaInicial;
 	private PImage fondo, agua, ganadorAzul, ganadorRojo, empate, instrucciones, planta;
 	private PFont inconsolata;
 	private int numActualCarga, numActualPantallaIni;
 	private PezAzul pezAzul;
 	private PezRojo pezRojo;
+	private boolean errorIPs;
 	private ArrayList<Alimento> alimentos;
 	private ArrayList<Thread> capsulas;
 	private ControlCliente cs;
@@ -26,6 +29,7 @@ public class Logica implements Observer {
 	private EscanerRed er;
 	private Minim minim;
 	private AudioPlayer soundtrack;
+	private AudioSample burbuja, burbujaMala;
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -37,8 +41,13 @@ public class Logica implements Observer {
 		iniciarVariables();
 	}
 
+	/*
+	 * Método que se encarga de inicializar las variables
+	 */
 	public void iniciarVariables() {
 		numActualPantallaIni = 20;
+
+		errorIPs = false;
 
 		// Se inicia el Servidor
 		servidor = new ControlServidor(this);
@@ -49,6 +58,12 @@ public class Logica implements Observer {
 
 		soundtrack = minim.loadFile("../data/Musica/koipondtrack.mp3");
 		soundtrack.loop();
+
+		burbuja = minim.loadSample("../data/Musica/burbuja.mp3");
+		burbujaMala = minim.loadSample("../data/Musica/burbujaMala.mp3");
+
+		minutos = 0;
+		segundos = 59;
 	}
 
 	public void cargarPantallaInicial() {
@@ -127,11 +142,24 @@ public class Logica implements Observer {
 			pezAzul.pintar();
 			pezRojo.pintar();
 			pezRojo.mover();
+			restarTiempo();
+			comer();
+			choque();
+			if (errorIPs) {
+				adicionarAlimento();
+			}
 			app.image(agua, app.width / 2, app.height / 2);
 			app.image(planta, app.width / 2, app.height / 2);
-			app.text("1:00", 835, 29);
+			app.text(minutos + ":" + segundos, 835, 29);
 			break;
 		case 4:
+			app.image(ganadorAzul, app.width / 2, app.height / 2);
+			break;
+		case 5:
+			app.image(ganadorRojo, app.width / 2, app.height / 2);
+			break;
+		case 6:
+			app.image(empate, app.width / 2, app.height / 2);
 			break;
 		}
 	}
@@ -160,17 +188,6 @@ public class Logica implements Observer {
 	@Override
 	public synchronized void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		/*
-		 * if (o instanceof ControlCliente) { String mensaje = (String) arg;
-		 * System.out.println("[notificación: " + mensaje + "]"); if
-		 * (mensaje.equals("arriba")) { pezRojo.setArriba(true); } if
-		 * (mensaje.equals("abajo")) { pezRojo.setAbajo(true); } if
-		 * (mensaje.equals("izquierda")) { pezRojo.setIzquierda(true); } if
-		 * (mensaje.equals("derecha")) { pezRojo.setDerecha(true); } if
-		 * (mensaje.equals("quieto")) { pezRojo.setArriba(false);
-		 * pezRojo.setAbajo(false); pezRojo.setIzquierda(false);
-		 * pezRojo.setDerecha(false); } }
-		 */
 
 		if (o instanceof EscanerRed && arg instanceof String) {
 			String ip = (String) arg;
@@ -186,8 +203,95 @@ public class Logica implements Observer {
 
 				}
 			}
+
+			if (ip.equals("error")) {
+				errorIPs = true;
+			}
+
 		}
 
+	}
+
+	public void comer() {
+
+		// Pez Azul
+		for (int i = 0; i < alimentos.size(); i++) {
+			if (PApplet.dist(pezAzul.getPosX(), pezAzul.getPosY(), alimentos.get(i).getPosX(),
+					alimentos.get(i).getPosY()) < 30) {
+				if (alimentos.get(i) instanceof AlimentoBueno) {
+					alimentos.remove(i);
+					burbuja.trigger();
+					pezAzul.setTam(pezAzul.getTam() + 10);
+				}
+				if (alimentos.get(i) instanceof AlimentoMalo) {
+					alimentos.remove(i);
+					burbujaMala.trigger();
+					pezAzul.setTam(pezAzul.getTam() - 10);
+				}
+			}
+		}
+		// Pez Rojo
+		for (int i = 0; i < alimentos.size() - 1; i++) {
+			if (PApplet.dist(pezRojo.getPosX(), pezRojo.getPosY(), alimentos.get(i).getPosX(),
+					alimentos.get(i).getPosY()) < 30) {
+				if (alimentos.get(i) instanceof AlimentoBueno) {
+					alimentos.remove(i);
+					burbuja.trigger();
+					pezRojo.setTam(pezRojo.getTam() + 10);
+				}
+				if (alimentos.get(i) instanceof AlimentoMalo) {
+					alimentos.remove(i);
+					burbujaMala.trigger();
+					pezRojo.setTam(pezRojo.getTam() - 10);
+				}
+			}
+		}
+
+	}
+
+	public void choque() {
+		if (PApplet.dist(pezRojo.getPosX(), pezRojo.getPosY(), pezAzul.getPosX(), pezAzul.getPosY()) < 80) {
+			if (pezRojo.getTam() < pezAzul.getTam()) {
+				pezRojo.setTam(pezRojo.getTam() - 10);
+			}
+			if (pezAzul.getTam() < pezRojo.getTam()) {
+				pezAzul.setTam(pezAzul.getTam() - 10);
+			}
+		}
+	}
+
+	public void adicionarAlimento() {
+		if (app.frameCount % 30 == 0) {
+			int random = (int) app.random(2);
+			switch (random) {
+			case 0:
+				alimentos.add(new AlimentoBueno(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
+				break;
+			case 1:
+				alimentos.add(new AlimentoMalo(this, app, (int) app.random(0, 900), (int) app.random(0, 700)));
+				break;
+
+			}
+		}
+	}
+
+	public void restarTiempo() {
+		if (app.frameCount % 60 == 0) {
+			if (segundos >= 0) {
+				segundos--;
+			}
+			if(segundos <= 0) {
+				if (pezRojo.getTam() > pezAzul.getTam()) {
+					pantallas = 5;
+				}
+				if (pezAzul.getTam() > pezRojo.getTam()) {
+					pantallas = 4;
+				}
+				if (pezAzul.getTam() == pezRojo.getTam()) {
+					pantallas = 6;
+				}
+			}
+		}
 	}
 
 	public void keyPressed() {
@@ -209,6 +313,21 @@ public class Logica implements Observer {
 			// pezRojo.keyPressed();
 			// System.out.println("pantalla: " + pantallas);
 			//
+			break;
+		case 4:
+			if (app.key == app.ENTER) {
+				pantallas = 1;
+			}
+			break;
+		case 5:
+			if (app.key == app.ENTER) {
+				pantallas = 1;
+			}
+			break;
+		case 6:
+			if (app.key == app.ENTER) {
+				pantallas = 1;
+			}
 			break;
 		}
 	}

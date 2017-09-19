@@ -107,8 +107,30 @@ public class Pez implements Runnable {
 	public void setIzquierda(boolean izquierda) {
 		this.izquierda = izquierda;
 	}
-	
-	
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
+	public int getTam() {
+		return tam;
+	}
+
+	public void setTam(int tam) {
+		this.tam = tam;
+	}
 	
 //-----------FINAL DE LA CLASE PEZ--------//
 }

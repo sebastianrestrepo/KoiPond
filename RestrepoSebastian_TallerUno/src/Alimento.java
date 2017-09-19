@@ -15,7 +15,7 @@ public abstract class Alimento implements Runnable {
 		this.app = app;
 		this.posX = posX;
 		this.posY = posY;
-		tam = (int) (10+Math.random()*60);
+		tam = (int) app.random(10, 60);
 	}
 
 	@Override
@@ -33,6 +33,22 @@ public abstract class Alimento implements Runnable {
 	public abstract void pintar();
 	
 	public abstract void calcular();
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
 	
 	
 	//---------FINAL CLASE ALIMENTO-------//
