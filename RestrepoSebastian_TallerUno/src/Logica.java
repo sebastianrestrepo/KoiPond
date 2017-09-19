@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -22,9 +24,12 @@ public class Logica implements Observer {
 	private ControlCliente cs;
 	private ControlServidor servidor;
 	private EscanerRed er;
+	private Minim minim;
+	private AudioPlayer soundtrack;
 
 	public Logica(PApplet app) {
 		this.app = app;
+		minim = new Minim(app);
 		cargarPantallaCarga();
 		cargar = new Cargar(app);
 		cargar.start();
@@ -38,10 +43,12 @@ public class Logica implements Observer {
 		// Se inicia el Servidor
 		servidor = new ControlServidor(this);
 		new Thread(servidor).start();
-		
+
 		inconsolata = app.createFont("Inconsolata.oft", 17);
 		app.textFont(inconsolata);
 
+		soundtrack = minim.loadFile("../data/Musica/koipondtrack.mp3");
+		soundtrack.loop();
 	}
 
 	public void cargarPantallaInicial() {
@@ -153,30 +160,17 @@ public class Logica implements Observer {
 	@Override
 	public synchronized void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-/*
-		if (o instanceof ControlCliente) {
-			String mensaje = (String) arg;
-			System.out.println("[notificación: " + mensaje + "]");
-			if (mensaje.equals("arriba")) {
-				pezRojo.setArriba(true);
-			}
-			if (mensaje.equals("abajo")) {
-				pezRojo.setAbajo(true);
-			}
-			if (mensaje.equals("izquierda")) {
-				pezRojo.setIzquierda(true);
-			}
-			if (mensaje.equals("derecha")) {
-				pezRojo.setDerecha(true);
-			}
-			if (mensaje.equals("quieto")) {
-				pezRojo.setArriba(false);
-				pezRojo.setAbajo(false);
-				pezRojo.setIzquierda(false);
-				pezRojo.setDerecha(false);
-			}
-		}
-		*/
+		/*
+		 * if (o instanceof ControlCliente) { String mensaje = (String) arg;
+		 * System.out.println("[notificación: " + mensaje + "]"); if
+		 * (mensaje.equals("arriba")) { pezRojo.setArriba(true); } if
+		 * (mensaje.equals("abajo")) { pezRojo.setAbajo(true); } if
+		 * (mensaje.equals("izquierda")) { pezRojo.setIzquierda(true); } if
+		 * (mensaje.equals("derecha")) { pezRojo.setDerecha(true); } if
+		 * (mensaje.equals("quieto")) { pezRojo.setArriba(false);
+		 * pezRojo.setAbajo(false); pezRojo.setIzquierda(false);
+		 * pezRojo.setDerecha(false); } }
+		 */
 
 		if (o instanceof EscanerRed && arg instanceof String) {
 			String ip = (String) arg;
@@ -211,7 +205,7 @@ public class Logica implements Observer {
 			break;
 		case 3:
 			// iniciarVariables();
-			//pezAzul.keyPressed();
+			// pezAzul.keyPressed();
 			// pezRojo.keyPressed();
 			// System.out.println("pantalla: " + pantallas);
 			//
@@ -252,7 +246,5 @@ public class Logica implements Observer {
 		this.pezAzul = pezAzul;
 	}
 
-	
-	
 	// -------------FINAL------------//
 }
