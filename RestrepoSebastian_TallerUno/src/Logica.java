@@ -66,6 +66,9 @@ public class Logica implements Observer {
 		segundos = 59;
 	}
 
+	/*
+	 * Método que se encarga de cargar la pantalla inicial
+	 */
 	public void cargarPantallaInicial() {
 		pantallaInicial = new PImage[68];
 		for (int i = 19; i < pantallaInicial.length; i++) {
@@ -76,6 +79,9 @@ public class Logica implements Observer {
 		}
 	}
 
+	/*
+	 * Método que se encarga de inicializar el mundo
+	 */
 	public void iniciarMundo() {
 		// Se inicia el Pez Azul
 		pezAzul = new PezAzul(this, app, 100, 100);
@@ -102,6 +108,9 @@ public class Logica implements Observer {
 		new Thread(er).start();
 	}
 
+	/*
+	 * Método que se encarga de la pantalla de carga
+	 */
 	public void cargarPantallaCarga() {
 		pantallaCarga = new PImage[18];
 		for (int i = 0; i < pantallaCarga.length; i++) {
@@ -118,7 +127,10 @@ public class Logica implements Observer {
 		ganadorRojo = app.loadImage("../data/PantallaFinal/RojoGanador.png");
 		empate = app.loadImage("../data/PantallaFinal/Empate.png");
 	}
-
+	
+	/*
+	 * Método que se llamará en el draw para pintar las pantallas
+	 */
 	public void pantallas() {
 		switch (pantallas) {
 		case 0:
@@ -164,6 +176,9 @@ public class Logica implements Observer {
 		}
 	}
 
+	/*
+	 * Método que se encarga de pintar la pantalla de inicio
+	 */
 	public void pintarPantallaInicial() {
 		app.image(pantallaInicial[numActualPantallaIni], app.width / 2, app.height / 2);
 		if (app.frameCount % 5 == 0) {
@@ -174,6 +189,9 @@ public class Logica implements Observer {
 		}
 	}
 
+	/*
+	 * Método que se encarga de pintar la pantalla de carga
+	 */
 	public void pintarPantallaCarga() {
 		app.image(pantallaCarga[numActualCarga], app.width / 2, app.height / 2);
 		if (app.frameCount % 5 == 0) {
