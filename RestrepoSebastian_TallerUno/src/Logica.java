@@ -233,7 +233,7 @@ public class Logica implements Observer {
 	public void comer() {
 
 		// Pez Azul
-		for (int i = 0; i < alimentos.size(); i++) {
+		for (int i = 0; i < alimentos.size() - 1; i++) {
 			if (PApplet.dist(pezAzul.getPosX(), pezAzul.getPosY(), alimentos.get(i).getPosX(),
 					alimentos.get(i).getPosY()) < 30) {
 				if (alimentos.get(i) instanceof AlimentoBueno) {
