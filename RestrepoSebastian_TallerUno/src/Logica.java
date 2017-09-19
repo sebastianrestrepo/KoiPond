@@ -252,10 +252,12 @@ public class Logica implements Observer {
 	public void choque() {
 		if (PApplet.dist(pezRojo.getPosX(), pezRojo.getPosY(), pezAzul.getPosX(), pezAzul.getPosY()) < 80) {
 			if (pezRojo.getTam() < pezAzul.getTam()) {
-				pezRojo.setTam(pezRojo.getTam() - 10);
+				if(pezRojo.getTam()>100)
+				pezRojo.setTam(pezRojo.getTam() - 1);
 			}
 			if (pezAzul.getTam() < pezRojo.getTam()) {
-				pezAzul.setTam(pezAzul.getTam() - 10);
+				if(pezAzul.getTam()>100)
+				pezAzul.setTam(pezAzul.getTam() - 1);
 			}
 		}
 	}
