@@ -1,7 +1,7 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public abstract class Alimento implements Runnable {
+public abstract class Alimento {
 
 	protected Logica log;
 	protected PApplet app;
@@ -18,17 +18,6 @@ public abstract class Alimento implements Runnable {
 		tam = (int) app.random(10, 60);
 	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		try {
-			Thread.sleep(66);
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	public abstract void pintar();
 	

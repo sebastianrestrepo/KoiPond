@@ -20,7 +20,6 @@ public class ControlServidor implements Observer, Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while (true) {
 			try {
 				Thread.sleep(5000);
@@ -33,41 +32,34 @@ public class ControlServidor implements Observer, Runnable {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		// Se adicionan los nuevos clientes que el Creador de Clientes aceptó
+		// previamente
 		if (o instanceof CreadorClientes) {
-			Socket s = (Socket) arg;
-			ControlCliente nuevoCliente = new ControlCliente(s);
-			clientes.add(nuevoCliente);
-			System.out.println("nuevoCliente");
-			clientes.get(clientes.size() - 1).enviarMensaje(new Mensaje(null, clientes.size()));
-			nuevoCliente.addObserver(this);
-			new Thread(nuevoCliente).start();
+			if (arg instanceof Socket) {
+				Socket s = (Socket) arg;
+				ControlCliente nuevoCliente = new ControlCliente(s);
+				nuevoCliente.addObserver(this);
+				clientes.add(nuevoCliente);
+				clientes.get(clientes.size() - 1).enviarMensaje(new Mensaje(null, clientes.size()));
+				Thread t = new Thread(nuevoCliente);
+				t.start();
+				System.out.println("nuevoCliente:" + nuevoCliente.toString());
+			}
 		}
 
+		// Se capturan los mensaje que recibe cada cliente y se opera con ellos
+		// dependiendo de las condiciones que se necesitan (mover personajes)
 		if (o instanceof ControlCliente) {
 
-			ControlCliente controlador = (ControlCliente) o;
+			// ControlCliente controlador = (ControlCliente) o;
 			if (arg instanceof Mensaje) {
 				Mensaje m = (Mensaje) arg;
-				System.out.println("Nuevo mensaje con indice: " + m.getIndice());
+				System.out.println("Nuevo mensaje con indice: " + m.getIndice() + m.getMensaje());
 
-				/*
-				// for (int i = 0; i < clientes.size(); i++) {
-				if (m.getIndice() != clientes.size()) {
-					m.setIndice(clientes.size());
-					System.out.println("Entra: " + (m.getIndice() != clientes.size()));
-					controlador.enviarMensaje(m);
-					System.out.println("Se reenvia a: " + clientes.size() + " este indice: " + m.getIndice()
-							+ " y este mensaje: " + m.getMensaje());
-				} else {
-					// System.out.println("No se reenvia a: " + i);
-				}
-				// }
-				//
-				*/
-				 
 
 				System.out.println("[notificación: " + m.getMensaje() + " del cliente número: " + m.getIndice() + "]");
+				
+				// Movimiento Pez Rojo
 				if (m.getIndice() == 1) {
 					if (m.getMensaje().equals("arriba")) {
 						log.getPezRojo().setArriba(true);
@@ -89,7 +81,9 @@ public class ControlServidor implements Observer, Runnable {
 					}
 				}
 
+				// Movimiento Pez Azul
 				if (m.getIndice() == 2) {
+					System.out.println("Efectivamente el indice era 2 : " + m.getIndice());
 					if (m.getMensaje().equals("arriba")) {
 						log.getPezAzul().setArriba(true);
 					}
@@ -114,5 +108,6 @@ public class ControlServidor implements Observer, Runnable {
 		}
 
 	}
+
 	// ---------------FINAL DE LA CLASE---------//
 }

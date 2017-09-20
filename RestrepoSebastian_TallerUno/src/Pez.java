@@ -30,6 +30,7 @@ public class Pez implements Runnable {
 		try {
 			while (vivo) {
 				calculo();
+				mover();
 				Thread.sleep(66);
 			}
 		} catch (InterruptedException e) {
@@ -37,8 +38,8 @@ public class Pez implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
 
+	// Método que se encarga de calcular los frames de la animación de los peces
 	public void calculo() {
 		switch (estado) {
 		case 1:
@@ -73,9 +74,45 @@ public class Pez implements Runnable {
 			break;
 		}
 	}
-
 	
-	//-------------GETTERS Y SETTERS----------//
+	//Método que se encarga de realizar el movimiento del pez
+	public void mover() {
+		// Mover arriba
+		if (arriba) {
+			if (posY > 15) {
+				estado = 2;
+				posY -= 3;
+				// arriba = false;
+			}
+		}
+
+		// Mover a la derecha
+		if (derecha) {
+			if (posX < app.width - 15) {
+				estado = 3;
+				posX += 3;
+			}
+		}
+
+		// Mover a la izquierda
+		if (izquierda) {
+			if (posX > 15) {
+				estado = 4;
+				posX -= 3;
+			}
+		}
+
+		// Mover abajo
+		if (abajo) {
+			if (posY < app.height - 15) {
+				estado = 5;
+				posY += 3;
+			}
+		}
+
+	}
+
+	// -------------GETTERS Y SETTERS----------//
 	public boolean isArriba() {
 		return arriba;
 	}
@@ -131,6 +168,6 @@ public class Pez implements Runnable {
 	public void setTam(int tam) {
 		this.tam = tam;
 	}
-	
-//-----------FINAL DE LA CLASE PEZ--------//
+
+	// -----------FINAL DE LA CLASE PEZ--------//
 }

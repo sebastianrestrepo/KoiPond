@@ -23,7 +23,6 @@ public class Logica implements Observer {
 	private PezRojo pezRojo;
 	private boolean errorIPs;
 	private ArrayList<Alimento> alimentos;
-	private ArrayList<Thread> capsulas;
 	private ControlCliente cs;
 	private ControlServidor servidor;
 	private EscanerRed er;
@@ -93,14 +92,6 @@ public class Logica implements Observer {
 
 		// Se crean los alimentos
 		alimentos = new ArrayList<Alimento>();
-		capsulas = new ArrayList<Thread>();
-
-		for (int i = 0; i < alimentos.size(); i++) {
-			capsulas.add(new Thread(alimentos.get(i)));
-			if (alimentos.get(i) != null) {
-				capsulas.get(i).start();
-			}
-		}
 
 		// Se inicia el escaner
 		er = new EscanerRed();
@@ -118,6 +109,9 @@ public class Logica implements Observer {
 		}
 	}
 
+	/*
+	 * Método que se encarga de cargar las imagenes del fondo y pantallas finales
+	 */
 	public void cargarImagenes() {
 		fondo = app.loadImage("../data/fondo/Fondo.png");
 		agua = app.loadImage("../data/fondo/Agua.png");
@@ -127,7 +121,7 @@ public class Logica implements Observer {
 		ganadorRojo = app.loadImage("../data/PantallaFinal/RojoGanador.png");
 		empate = app.loadImage("../data/PantallaFinal/Empate.png");
 	}
-	
+
 	/*
 	 * Método que se llamará en el draw para pintar las pantallas
 	 */
@@ -153,7 +147,6 @@ public class Logica implements Observer {
 			}
 			pezAzul.pintar();
 			pezRojo.pintar();
-			pezRojo.mover();
 			restarTiempo();
 			comer();
 			choque();
@@ -230,6 +223,9 @@ public class Logica implements Observer {
 
 	}
 
+	/*
+	 * Método que tiene las condiciones para que los peces puedan comer el alimento
+	 */
 	public void comer() {
 
 		// Pez Azul
@@ -267,19 +263,28 @@ public class Logica implements Observer {
 
 	}
 
+	/*
+	 * Método que tiene las condiciones para que se le resten puntos al pez que
+	 * tenga menos puntaje cuando se chocan
+	 */
 	public void choque() {
 		if (PApplet.dist(pezRojo.getPosX(), pezRojo.getPosY(), pezAzul.getPosX(), pezAzul.getPosY()) < 80) {
 			if (pezRojo.getTam() < pezAzul.getTam()) {
-				if(pezRojo.getTam()>100)
-				pezRojo.setTam(pezRojo.getTam() - 1);
+				if (pezRojo.getTam() > 100)
+					pezRojo.setTam(pezRojo.getTam() - 1);
 			}
 			if (pezAzul.getTam() < pezRojo.getTam()) {
-				if(pezAzul.getTam()>100)
-				pezAzul.setTam(pezAzul.getTam() - 1);
+				if (pezAzul.getTam() > 100)
+					pezAzul.setTam(pezAzul.getTam() - 1);
 			}
 		}
 	}
 
+	/*
+	 * Método que se encarga de adicionar el alimento al lienzo y solo será llamado
+	 * en caso de que el EscanerRed (Lector de IP's) no funcione o presente una
+	 * excepción
+	 */
 	public void adicionarAlimento() {
 		if (app.frameCount % 30 == 0) {
 			int random = (int) app.random(2);
@@ -295,12 +300,16 @@ public class Logica implements Observer {
 		}
 	}
 
+	/*
+	 * Método que se encarga de restar el tiempo de juego y determinar cuando se
+	 * termina
+	 */
 	public void restarTiempo() {
 		if (app.frameCount % 60 == 0) {
 			if (segundos >= 0) {
 				segundos--;
 			}
-			if(segundos <= 0) {
+			if (segundos <= 0) {
 				if (pezRojo.getTam() > pezAzul.getTam()) {
 					pantallas = 5;
 				}
@@ -314,6 +323,19 @@ public class Logica implements Observer {
 		}
 	}
 
+	/*
+	 * Método que se encarga de reiniciar las variables cuando se vuelve a comenzar
+	 * al juego
+	 */
+	public void reiniciarVariables() {
+		segundos = 59;
+		pezAzul.setTam(100);
+		pezRojo.setTam(100);
+	}
+
+	/*
+	 * Método que contiene las condicioens para pasar de pantalla con el teclado
+	 */
 	public void keyPressed() {
 		switch (pantallas) {
 		case 1:
@@ -328,25 +350,24 @@ public class Logica implements Observer {
 			}
 			break;
 		case 3:
-			// iniciarVariables();
-			// pezAzul.keyPressed();
-			// pezRojo.keyPressed();
-			// System.out.println("pantalla: " + pantallas);
-			//
+			// Nada
 			break;
 		case 4:
 			if (app.key == app.ENTER) {
 				pantallas = 1;
+				reiniciarVariables();
 			}
 			break;
 		case 5:
 			if (app.key == app.ENTER) {
 				pantallas = 1;
+				reiniciarVariables();
 			}
 			break;
 		case 6:
 			if (app.key == app.ENTER) {
 				pantallas = 1;
+				reiniciarVariables();
 			}
 			break;
 		}

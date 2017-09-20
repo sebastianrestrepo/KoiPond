@@ -7,12 +7,13 @@ public class AlimentoBueno extends Alimento {
 		alimento = log.getCargar().getAlimentoBueno();
 	}
 
+	//Método para pintar el alimento
 	public void pintar() {
-
 		app.image(alimento[numFrame], posX, posY);
 		calcular();
 	}
 
+	//Método para calcular los frames de la animación del alimento
 	public void calcular() {
 		if (app.frameCount % 2 == 0) {
 			numFrame++;

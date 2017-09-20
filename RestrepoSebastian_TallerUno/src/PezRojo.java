@@ -5,7 +5,6 @@ public class PezRojo extends Pez {
 
 	public PezRojo(Logica log, PApplet app, int posX, int posY) {
 		super(log, app, posX, posY);
-		// 242
 		// igualarImagenes();
 		pezAdelante = log.getCargar().getPezRojoAdelante();
 		pezAtras = log.getCargar().getPezRojoAtras();
@@ -15,9 +14,8 @@ public class PezRojo extends Pez {
 		estado = 2;
 	}
 
-	///
+	//Método que se encarga de pintar las imagenes del pez dependiendo de su estado
 	public void pintar() {
-		// System.out.println("pintando pez azul");
 		switch (estado) {
 		case 1:
 			app.image(pezQuieto[numFrame], posX, posY, pezQuieto[numFrame].width / 3 + tam,
@@ -43,45 +41,7 @@ public class PezRojo extends Pez {
 		}
 	}
 
-	public void mover() {
-		// Mover arriba
-		if (arriba) {
-			if (posY > 15) {
-				estado = 2;
-				posY -= 2;
-				// arriba = false;
-			}
-		}
-
-		// Mover a la derecha
-		if (derecha) {
-			if (posX < app.width - 15) {
-				estado = 3;
-				posX += 2;
-			}
-		}
-
-		// Mover a la izquierda
-		if (izquierda) {
-			if (posX > 15) {
-				estado = 4;
-				posX -= 2;
-			}
-		}
-
-		// Mover abajo
-		if (abajo) {
-			if (posY < app.height - 15) {
-				estado = 5;
-				posY += 2;
-			}
-		}
-
-	}
-
-	// ------------FINAL DEL MÉTODO MOVER-------------//
-
-	// ---------------GETTERS Y SETTERS----------------//
+	//---------------GETTERS Y SETTERS----------------//
 	public boolean isArriba() {
 		return arriba;
 	}

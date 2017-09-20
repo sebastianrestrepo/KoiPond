@@ -14,6 +14,12 @@ public class ControlCliente extends Observable implements Runnable {
 	private boolean conectado;
 	private Logica log;
 
+	/*
+	 * Esta clase se encarga de la Lógica del enlace de flujos, de recibir y enviar
+	 * mensajes, por medio del Socket que le asigna el ControlServidor y que llega
+	 * desde el CreadorClientes
+	 */
+
 	public ControlCliente(Socket s) {
 		this.s = s;
 		this.log = log;
@@ -31,8 +37,7 @@ public class ControlCliente extends Observable implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	@Override
@@ -53,19 +58,18 @@ public class ControlCliente extends Observable implements Runnable {
 	public void recibirMensaje() {
 		if (conectado) {
 			try {
-				System.out.println("[Esperando mensaje]");
+				// System.out.println("[Esperando mensaje]");
 				atraparMensaje = entrada.readObject();
-				Mensaje mensaje = (Mensaje) atraparMensaje;
-				System.out.println("Llegó un mensaje: " + mensaje);
-				/// if(mensaje.equals("arriba"));
-				setChanged();
-				notifyObservers(mensaje);
-				clearChanged();
+				if (atraparMensaje instanceof Mensaje) {
+					Mensaje mensaje = (Mensaje) atraparMensaje;
 
-				/*
-				
-				
-				*/
+					System.out.println("Llegó un mensaje: " + mensaje.getIndice() + mensaje.getMensaje());
+					/// if(mensaje.equals("arriba"));
+					setChanged();
+					notifyObservers(mensaje);
+					clearChanged();
+				}
+		
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -104,5 +108,9 @@ public class ControlCliente extends Observable implements Runnable {
 		this.conectado = conectado;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 	// ----------FINAL DE LA CLASE COMUNICACIONSERVIDOR--------//
 }

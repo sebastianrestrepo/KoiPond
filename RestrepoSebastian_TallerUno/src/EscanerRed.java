@@ -15,6 +15,7 @@ public class EscanerRed extends Observable implements Runnable {
 	}
 
 	public void run() {
+		//Solo se ejecutará mientras no exista error
 		while (noError) {
 
 			try {
@@ -32,9 +33,9 @@ public class EscanerRed extends Observable implements Runnable {
 					String buscado = base + "." + i;
 					System.out.println("IP ES: " + buscado);
 
+					//Si encuentra una IP disponible en esa dirección base, notifique al observador
 					if (InetAddress.getByName(buscado).isReachable(espera)) {
-						// padre.update(this, buscado);
-
+						
 						setChanged();
 						notifyObservers(buscado);
 						clearChanged();
@@ -46,6 +47,8 @@ public class EscanerRed extends Observable implements Runnable {
 				Thread.sleep(16);
 
 			} catch (IOException e) {
+				//Si aparece una excepeción, deje de ejecutar el Hilo e informele al observador que...
+				//para que adicione el alimento de otra manera y no se pare el juego
 				noError = false;
 				System.out.println("Error Escaner Red");
 				setChanged();

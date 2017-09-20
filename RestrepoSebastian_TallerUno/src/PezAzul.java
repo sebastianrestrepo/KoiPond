@@ -5,7 +5,6 @@ public class PezAzul extends Pez {
 
 	public PezAzul(Logica log, PApplet app, int posX, int posY) {
 		super(log, app, posX, posY);
-		//igualarImagenes();
 		pezAdelante = log.getCargar().getPezAzulAdelante();	
 		pezAtras = log.getCargar().getPezAzulAtras();
 		pezDer = log.getCargar().getPezAzulDer();
@@ -14,10 +13,8 @@ public class PezAzul extends Pez {
 		estado = 5;
 	}
 	
-	
+	//Método que se encarga de pintar las imagenes del pez dependiendo de su estado
 	public void pintar() {
-		//System.out.println("pintando pez azul");
-		//posY+=2;
 		switch(estado) {
 		case 1:
 			app.image(pezQuieto[numFrame], posX, posY, pezQuieto[numFrame].width/3 + tam,
@@ -41,42 +38,6 @@ public class PezAzul extends Pez {
 					pezAtras[numFrame].height/3+ tam);
 			break;
 		}
-	}
-	
-	public void mover() {
-		// Mover arriba
-		if (arriba) {
-			if (posY > 15) {
-				estado = 2;
-				posY -= 2;
-				// arriba = false;
-			}
-		}
-
-		// Mover a la derecha
-		if (derecha) {
-			if (posX < app.width - 15) {
-				estado = 3;
-				posX += 2;
-			}
-		}
-
-		// Mover a la izquierda
-		if (izquierda) {
-			if (posX > 15) {
-				estado = 4;
-				posX -= 2;
-			}
-		}
-
-		// Mover abajo
-		if (abajo) {
-			if (posY < app.height - 15) {
-				estado = 5;
-				posY += 2;
-			}
-		}
-
 	}
 	
 	//----------FINAL DE LA CLASE PEZ AZUL-----------//
